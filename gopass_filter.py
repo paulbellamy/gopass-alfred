@@ -8,13 +8,17 @@ import json
 import re
 
 logging.basicConfig(filename='/tmp/gopassalfred.log', level=logging.DEBUG)
-logging.debug('Debug log started, called with {}'.format(sys.argv))
+query = sys.argv[1] if len(sys.argv) > 1 else ""
+logging.debug('Debug log started, called with {}'.format(query))
 
 my_env = os.environ.copy()
 my_env['PATH'] = '/usr/local/bin:{}'.format(my_env['PATH'])
 
-process = subprocess.Popen(['/usr/local/bin/gopass', 'list', '-f'], stdout=subprocess.PIPE, env=my_env)
-stdout, stderr = process.communicate()
+gopass = subprocess.Popen(['/usr/local/bin/gopass', 'list', '-f'], stdout=subprocess.PIPE, env=my_env)
+fzy = subprocess.Popen(['/usr/local/bin/fzy', '-e', query], stdin=gopass.stdout, stdout=subprocess.PIPE, env=my_env)
+
+gopass.stdout.close()
+stdout, stderr = fzy.communicate()
 
 outlist = [
     {
@@ -26,5 +30,7 @@ outlist = [
         "autocomplete": result
     } for result in stdout.decode('ascii').splitlines()
 ]
+
+logging.debug('Matched {} items for: {}'.format(len(outlist), query))
 
 print(json.dumps({'items': outlist}))
