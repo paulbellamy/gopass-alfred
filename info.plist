@@ -31,8 +31,58 @@
 				<false/>
 			</dict>
 		</array>
+		<key>272B25FB-48E3-4F4B-B298-677588379601</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>526D4250-28CA-4CC8-B02C-1A40BA409357</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4C669A7D-7AF7-407F-BA72-C6BAD597AA76</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>B7A1FC05-F5E2-4FF1-B25A-7078CB960F90</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>B1FF35DC-433E-4CCC-9CB3-7C8E1BC532F7</key>
-		<array/>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>272B25FB-48E3-4F4B-B298-677588379601</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>DB6BF0F4-4C45-43AF-9889-5E5E6CD8048F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4C669A7D-7AF7-407F-BA72-C6BAD597AA76</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 	</dict>
 	<key>createdby</key>
 	<string>Martin Hoefling</string>
@@ -55,20 +105,17 @@
 				<string>export PATH=/usr/local/bin:$PATH
 
 if [ -f ~/.gpg-agent-info ] &amp;&amp; [ -n "$(pgrep gpg-agent)" ]; then
-	source ~/.gpg-agent-info
+	source ~/.gpg-agent-info 2&gt;&amp;1 &gt;/dev/null
 	export GPG_AGENT_INFO
 else
-	eval $(gpg-agent --daemon)
+	eval $(gpg-agent --daemon) 2&gt;&amp;1 &gt;/dev/null
 fi
 
 export GPG_TTY="$(tty)"
 
-/usr/local/bin/gopass -c "{query}"
+/usr/local/bin/gopass show --password "{query}" | tail -n1
 
 RESULT=$?
-
-osascript -e 'display notification "Copied password for {query} to clipboard" with title "Gopass"'
-
 exit $RESULT</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -87,10 +134,52 @@ exit $RESULT</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>4C669A7D-7AF7-407F-BA72-C6BAD597AA76</string>
+			<key>version</key>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Copied password</string>
+				<key>title</key>
+				<string>Gopass</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>B7A1FC05-F5E2-4FF1-B25A-7078CB960F90</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
 				<integer>2</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<false/>
 				<key>argumenttrimmode</key>
 				<integer>0</integer>
 				<key>argumenttype</key>
@@ -130,7 +219,47 @@ exit $RESULT</string>
 			<key>uid</key>
 			<string>0D5132AE-3620-4D5F-BA72-EFD481455463</string>
 			<key>version</key>
-			<integer>2</integer>
+			<integer>3</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>Copied username</string>
+				<key>title</key>
+				<string>Gopass</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>526D4250-28CA-4CC8-B02C-1A40BA409357</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+				<key>ignoredynamicplaceholders</key>
+				<false/>
+				<key>transient</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>272B25FB-48E3-4F4B-B298-677588379601</string>
+			<key>version</key>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -140,9 +269,7 @@ exit $RESULT</string>
 				<key>escaping</key>
 				<integer>68</integer>
 				<key>script</key>
-				<string>USER=$(./get_password.py {query} username)
-osascript -e 'display notification "Copied username '$USER'" with title "Gopass"'
-echo $USER | pbcopy</string>
+				<string>./get_password.py {query} username</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -165,23 +292,51 @@ echo $USER | pbcopy</string>
 		<key>0D5132AE-3620-4D5F-BA72-EFD481455463</key>
 		<dict>
 			<key>xpos</key>
-			<integer>80</integer>
+			<integer>55</integer>
 			<key>ypos</key>
-			<integer>20</integer>
+			<integer>110</integer>
+		</dict>
+		<key>272B25FB-48E3-4F4B-B298-677588379601</key>
+		<dict>
+			<key>xpos</key>
+			<integer>480</integer>
+			<key>ypos</key>
+			<integer>230</integer>
+		</dict>
+		<key>4C669A7D-7AF7-407F-BA72-C6BAD597AA76</key>
+		<dict>
+			<key>xpos</key>
+			<integer>475</integer>
+			<key>ypos</key>
+			<integer>75</integer>
+		</dict>
+		<key>526D4250-28CA-4CC8-B02C-1A40BA409357</key>
+		<dict>
+			<key>xpos</key>
+			<integer>685</integer>
+			<key>ypos</key>
+			<integer>230</integer>
 		</dict>
 		<key>B1FF35DC-433E-4CCC-9CB3-7C8E1BC532F7</key>
 		<dict>
 			<key>xpos</key>
-			<integer>250</integer>
+			<integer>245</integer>
 			<key>ypos</key>
-			<integer>160</integer>
+			<integer>230</integer>
+		</dict>
+		<key>B7A1FC05-F5E2-4FF1-B25A-7078CB960F90</key>
+		<dict>
+			<key>xpos</key>
+			<integer>680</integer>
+			<key>ypos</key>
+			<integer>75</integer>
 		</dict>
 		<key>DB6BF0F4-4C45-43AF-9889-5E5E6CD8048F</key>
 		<dict>
 			<key>xpos</key>
-			<integer>250</integer>
+			<integer>245</integer>
 			<key>ypos</key>
-			<integer>20</integer>
+			<integer>75</integer>
 		</dict>
 	</dict>
 	<key>webaddress</key>
